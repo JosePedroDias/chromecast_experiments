@@ -5,7 +5,6 @@
 
 	// GLOBALS
 	var CRM, MB;
-	//var SENDERS_STATE = {};
 
 
 
@@ -34,10 +33,6 @@
 		}
 	};
 
-	/*CRM.onSystemVolumeChanged = function(ev) {
-		log('Received System Volume Changed event: ' + ev.data.level + ' ' + ev.data.muted);
-	};*/
-
 
 
 	MB = CRM.getCastMessageBus(NAMESPACE);
@@ -45,15 +40,12 @@
 	MB.onMessage = function(ev) {
 		var from = ev.senderId;
 		var mIn = ev.data;
-		var mOut = mIn; // default is echoing
+		var mOut;// = mIn; // default is echoing
 
 		log(from + ' <- ' + mIn);
 
 		try {
-			var c0 = mOut[0];
-			if (c0 === 'e') {
-				mOut = eval( mIn.substring(1) );
-			}
+			mOut = eval( mIn );
 
 			if (typeof mOut !== 'string') {
 				mOut = String(mOut);

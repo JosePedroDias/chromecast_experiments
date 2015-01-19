@@ -17,8 +17,14 @@ body {
 
 canvas {
 	position: absolute;
-	top: 100px;
-	right: 100px;
+	top:   50px;
+	right: 50px;
 	z-index: 1;
 	opacity: 0.8;
+}
+
+video {
+	position: absolute;
+	left: 50px;
+	top: 50px;
 }
