@@ -1,0 +1,24 @@
+/* https://developers.google.com/cast/docs/receiver_apps */
+
+html, body {
+	width: 100%;
+	height: 100%;
+}
+
+body {
+	font-family: 'Droid Sans', sans-serif;
+	overflow: hidden;
+	padding: 5%;
+	margin: 0;
+	font-size: 0.8em;
+	background-color: #FFFFFF;
+	color: #000000;
+}
+
+canvas {
+	position: absolute;
+	top: 100px;
+	right: 100px;
+	z-index: 1;
+	opacity: 0.8;
+}

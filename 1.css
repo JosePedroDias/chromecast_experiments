@@ -1,0 +1,18 @@
+html, body {
+	height: 100%;
+}
+
+body {
+	font-family: sans-serif;
+	overflow: hidden;
+}
+
+input {
+	position: absolute;
+	left: 10px;
+	top: 10px;
+	right: 10px;
+	width: calc(100% - 20px);
+	border: 1px solid #AAA;
+	opacity: 0.75;
+}
