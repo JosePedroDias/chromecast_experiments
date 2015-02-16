@@ -18,7 +18,7 @@
 
 	
 
-	window['__onGCastApiAvailable'] = function(loaded, errorInfo) {
+	window.__onGCastApiAvailable = function(loaded, errorInfo) {
 		var requestSession;
 
 		if (!loaded) { return log('api failed with error ' + errorInfo); }
@@ -92,17 +92,21 @@
 			chrome.cast.requestSession(sessionListener, onGeneric.bind('requestSession error:'));
 		};
 
-		//window.requestSession = requestSession; // TODO
+		//window.requestSession = requestSession; // xTODO
 		window.sendMessage = sendMessage;
 
 
 
-		var inputEl = document.getElementsByTagName('input')[0];
+		var inputEl = document.querySelector('.input-line');
 		inputEl.addEventListener('change', function(ev) {
 			var v = inputEl.value;
 			inputEl.value = '';
 			sendMessage(v);
 		});
 	};
+
+
+
+	log('APP VERSION ' + APP_VERSION);
 
 })();

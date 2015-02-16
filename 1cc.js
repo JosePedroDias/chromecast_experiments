@@ -6,6 +6,8 @@
 	// GLOBALS
 	var CRM, MB;
 
+	var lastId;
+
 
 
 	// https://developers.google.com/cast/docs/reference/receiver/
@@ -24,11 +26,18 @@
 	CRM.onSenderConnected = function(ev) {
 		log('Received Sender Connected event: ' + ev.data);
 		log( CRM.getSender(ev.data).userAgent );
+
+		lastId = ev.data;
 	};
 
 	CRM.onSenderDisconnected = function(ev) {
 		log('Received Sender Disconnected event: ' + ev.data);
 		if (CRM.getSenders().length === 0) {
+
+			if (ev.data === lastId) {
+				lastId = undefined;
+			}
+
 			window.close();
 		}
 	};
@@ -45,6 +54,7 @@
 		log(from + ' <- ' + mIn);
 
 		try {
+			/*jshint evil:true*/
 			mOut = eval( mIn );
 
 			if (typeof mOut !== 'string') {
@@ -61,7 +71,20 @@
 
 
 
+	window.send = function(data) {
+		if (lastId) {
+			MB.send(lastId, data);
+		}
+		else {
+			log('no sender to send to!');
+		}
+	};
+
+
+
 	CRM.start({statusText:'Application is starting'});
 	log('CRM started?');
+
+	log('APP VERSION ' + APP_VERSION);
     
 })();

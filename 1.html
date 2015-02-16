@@ -12,7 +12,22 @@
 	</head>
 
 	<body>
-		<input type="text" autofocus>
+		<input id="src" value="http://rd3.videos.sapo.pt/ZbkSD8f1e3LtndICCztq/mov/39">
+		<button onclick="sendMessage('load(\"' + src.value + '\")')">SET SRC</button>
+		<br/>
+
+		<input id="t" value="0">
+		<button onclick="sendMessage('v.currentTime = parseFloat(' + t.value + ')')">SET TIME</button>
+		<br/>
+
+		<button onclick="sendMessage('v.play()')">PLAY</button>
+		<button onclick="sendMessage('v.pause()')">PAUSE</button> | 
+		<button onclick="sendMessage('v.fsOn()')">FULLSCREEN</button>
+		<button onclick="sendMessage('v.fsOff()')">REGULAR</button>
+
+		<input class="input-line" type="text" autofocus>
+
+		<div id="log"></div>
 
 		<script type="text/javascript" src="1.js"></script>
 	</body>

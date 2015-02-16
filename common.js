@@ -1,12 +1,22 @@
 var APPLICATION_ID = 'D452BBEF';
 var NAMESPACE = 'urn:x-cast:com.josepedrodias.xpcc.first';
 
+var APP_VERSION = '150216_v3';
 
+
+
+var logEl;
 
 var log = function(msg) {
+	if (!logEl) {
+		logEl = document.getElementById('log');
+	}
+
 	var el = document.createElement('div');
 	el.appendChild( document.createTextNode( msg ) );
-	document.body.appendChild(el);
+	logEl.appendChild(el);
+
+	logEl.scrollTop = logEl.scrollHeight;
 };
 
 var onGeneric = function() {

@@ -1,0 +1,16 @@
+html {
+	height: 100%;
+}
+
+body {
+	height: 100%;
+	overflow: hidden;
+	background-color: #FFF;
+	padding: 0;
+	margin: 0;
+}
+
+#log {
+	font-family: monospace;
+	font-size: 14px;
+}
