@@ -8,6 +8,8 @@ setupChromeCastSender = function(APPLICATION_ID, NAMESPACE) {
 
 
 
+	// https://developers.google.com/cast/docs/reference/chrome/
+
 	api.isSupported = function() {
 		return ( ('chrome' in window) && ('cast' in window.chrome) && (!!window.chrome.cast.exists) );
 		// return ( ('chrome' in window) && ('cast' in window.chrome) && (!!window.chrome.cast.VERSION) );

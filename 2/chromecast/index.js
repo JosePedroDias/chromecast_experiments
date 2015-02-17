@@ -23,6 +23,8 @@
 
 	cc.on('sender_connected', function(data) {
 		log('sender_connected');
+
+		cc.broadcast({kind:'hello', value:'world'});
 	});
 
 	cc.on('sender_disconnected', function(data) {
@@ -138,6 +140,9 @@
 			case 'setVolume':
 				setVolume(msg.value);
 				break;
+
+			default:
+				console.error(msg);
 		}
 
 		cc.broadcast({kind:'echo', value:msg});

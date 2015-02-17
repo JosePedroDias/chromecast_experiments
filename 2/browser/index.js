@@ -89,6 +89,10 @@
 
 			case 'echo':
 				log(msg);
+				break;
+
+			default:
+				console.error(msg);
 		}
 	});
 

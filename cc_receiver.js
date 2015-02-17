@@ -8,6 +8,8 @@ setupChromeCastReceiver = function(APPLICATION_ID, NAMESPACE) {
 
 
 
+	// https://developers.google.com/cast/docs/reference/receiver/
+
 	var CRM, MB;
 
 	api.start = function() {
@@ -48,8 +50,7 @@ setupChromeCastReceiver = function(APPLICATION_ID, NAMESPACE) {
 	api.broadcast = function(data) {
 		var i, I, sender, senders = CRM.getSenders();
 		for (i = 0, I = senders.length; i < I; ++i) {
-			sender = senders[i];
-			MB.send(sender.senderId, data);
+			MB.send(sender[i], data);
 		}
 	};
 
