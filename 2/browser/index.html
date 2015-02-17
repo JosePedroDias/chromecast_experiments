@@ -15,7 +15,33 @@
 	</head>
 
 	<body>
-		<div id="log"></div>
+		<label for="video-url">videoURL</label>
+		<input type="text" id="video-url" value="http://rd3.videos.sapo.pt/ZbkSD8f1e3LtndICCztq/mov/39">
+		<br/>
+
+		<label for="poster-url">posterURL</label>
+		<input type="text" id="poster-url" value="http://thumbs.web.sapo.io/?p=http://rd3.videos.sapo.pt/ZbkSD8f1e3LtndICCztq/pic/560x420&W=560&H=314&errorpic=transparent&crop=corner_lt&cropcoords=0x53">
+		<br/>
+
+		<label for="autoplay">autoplay</label>
+		<input type="checkbox" id="autoplay" checked="">
+		<br/>
+
+		<button id="load-button">load</button>
+		<br/>
+
+		<hr/>
+
+		<label for="current-time">currentTime:</label>
+		<span id="current-time"></span>
+		<br/>
+
+		<label for="duration">duration:</label>
+		<span id="duration"></span>
+		<br/>
+
+		<label for="dimensions">dimensions:</label>
+		<span id="dimensions"></span>
 
 		<script type="text/javascript" src="index.js"></script>
 	</body>

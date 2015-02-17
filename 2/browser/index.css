@@ -8,9 +8,15 @@ body {
 	background-color: #FFF;
 	padding: 0;
 	margin: 0;
+	font-family: sans-serif;
 }
 
-#log {
-	font-family: monospace;
-	font-size: 14px;
+label {
+	display: inline-block;
+	width: 80px;
+	font-weight: bold;
+}
+
+input[type=text] {
+	width: 200px;
 }

@@ -1,6 +1,5 @@
 {
   "name": "ccxp",
   "root": "./",
-  "clean_urls": false,
-  "error_page": "error.html"
+  "clean_urls": false
 }

@@ -5,6 +5,8 @@
 
 	log('APP VERSION', APP_VERSION);
 
+	var sourceEl, videoEl = document.querySelector('video');
+
 	var cc = window.setupChromeCastReceiver(CC_APPLICATION_ID, CC_NAMESPACE);
 
 	cc.on('ready', function(data) {
@@ -27,9 +29,103 @@
 		log('sender_disconnected');
 	});
 
-	cc.on('message', function(data) {
-		log('message: ', data);
-		cc.send(data.senderId, data.data); // ECHO
+
+
+	// sender-triggered
+
+	var onLoad = function(videoURL, posterURL, autoplay) {
+		if (posterURL) {
+			videoEl.setAttribute('poster', posterURL);
+		}
+		else if (videoEl.hasAttribute('poster')) {
+			videoEl.removeAttribute('poster');
+		}
+
+		if (sourceEl) {
+			videoEl.removeChild(sourceEl);
+		}
+
+		sourceEl = document.createElement('source');
+		sourceEl.setAttribute('type', 'video/mp4');
+		sourceEl.setAttribute('src', videoURL);
+
+		if (autoplay) {
+			sourceEl.setAttribute('autoplay', '');
+		}
+
+		videoEl.appendChild(sourceEl);
+
+		videoEl.load();
+	};
+
+	var onPlay = function() {
+		videoEl.play();
+	};
+
+	var onPause = function() {
+		videoEl.pause();
+	};
+
+	var setVolume = function(v) {
+		videoEl.setVolume(v);
+	};
+
+
+
+	// triggered by video element
+
+	var onTimeupdate = function() {
+		cc.broadcast({
+			kind:  'timeupdate',
+			value: videoEl.currentTime
+		});
+	};
+
+	/*var onDurationchange = function() {
+		cc.broadcast({
+			kind:  'durationchange',
+			value: videoEl.duration
+		});
+	};*/
+
+	var onLoadedMetadata = function() {
+		cc.broadcast({
+			kind:      'loadedmetadata', 
+			imensions: [videoEl.videoWidth, videoEl.videoHeight],
+			duration:  videoEl.duration
+		});
+	};
+
+	var onEnded = function() {
+		cc.broadcast({
+			kind:'ended'
+		});
+	};
+
+	videoEl.addEventListener('timeupdate',     onTimeupdate);
+	//videoEl.addEventListener('durationchange', onDurationchange);
+	videoEl.addEventListener('loadedmetadata', onLoadedMetadata);
+	videoEl.addEventListener('ended',          onEnded);
+
+
+
+
+	cc.on('message', function(msg) {
+		log('message: ', msg);
+
+		switch (msg.kind) {
+			case 'load':
+				onLoad(msg.videoURL, msg.posterURL, msg.autoplay);
+				break;
+
+			case 'play':
+				onPlay();
+				break;
+				
+			case 'pause':
+				onPause();
+				break;
+		}
 	});
 
 	cc.start();
