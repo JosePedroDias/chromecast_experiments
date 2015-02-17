@@ -26,7 +26,7 @@ setupChromeCastReceiver = function(APPLICATION_ID, NAMESPACE) {
 		CRM.onSenderDisconnected = function(ev) {
 			api.emit('sender_disconnected', ev.data);
 
-			if (CRM.getSenders().length === 0) {
+			if (CRM.getSenders().length === 0) { // THIS IS OPTIONAL
 				api.emit('closing');
 				window.close();
 			}

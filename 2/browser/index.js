@@ -14,6 +14,14 @@
 	cc.on('ready', function(data) {
 		log('ready', data);
 
+		// to prevent session from expiring ?!
+		setInterval(function() {
+			cc.send({
+				kind:  'ping',
+				value: ~~( Math.random() * 10000 )
+			});
+		}, 1000);
+
 		document.querySelector('#load-button').addEventListener('click', function() {
 			var videoURL = document.querySelector('#video-url').value;
 			var posterURL = document.querySelector('#poster-url').value;
@@ -58,7 +66,6 @@
 
 	cc.on('error', function(data) {
 		console.error('error', data);
-		// window.alert(data);
 	});
 
 	cc.on('session_updated', function(data) {

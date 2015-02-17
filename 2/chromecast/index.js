@@ -112,6 +112,9 @@
 		var msg = JSON.parse(data.data);
 
 		switch (msg.kind) {
+			case 'ping':
+				break;
+
 			case 'load':
 				load(msg.videoURL, msg.posterURL, msg.autoplay);
 				break;
