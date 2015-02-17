@@ -44,9 +44,9 @@ setupChromeCastSender = function(APPLICATION_ID, NAMESPACE) {
 
 				api.emit(message, SESSION.sessionId);
 
-			    if (!isAlive) {
-			    	SESSION = null;
-			    }
+				if (!isAlive) {
+					SESSION = null;
+				}
 			};
 
 			var receiverMessage = function(namespace, message) {

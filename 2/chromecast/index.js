@@ -117,36 +117,35 @@
 
 
 	var nearestEnd = function(ct, vBuffered) {
-        var a, b;
-        for (var i = vBuffered.length - 1; i >= 0; --i) {
-            a = vBuffered.start(i);
-            b = vBuffered.end(i);
-            if (ct >= a && ct <= b) {
-                return i;
-            }
-        }
-        return -1;
-    };
+		var s, e;
+		for (var i = vBuffered.length - 1; i >= 0; --i) {
+			s = vBuffered.start(i);
+			e = vBuffered.end(i);
+			if (ct >= s && ct <= e) { return i; }
+		}
+		return -1;
+	};
 
-    var calcProgress = function(videoEl) {
-    	var ct = videoEl.currentTime;
-        var d = videoEl.duration;
-        var res = {start:0, end:0, length:0 };
+	var calcProgress = function(videoEl) {
+		var res = {start:0, end:0, length:0 };
 
-        if (!isFinite(ct) || !isFinite(d)) {
-        	return res;
-        }
+		var ct = videoEl.currentTime;
+		var d = videoEl.duration;
 
-        var i = nearestEnd(ct, videoEl.buffered);
+		if (!isFinite(ct) || !isFinite(d)) {
+			return res;
+		}
 
-        if (i !== -1) {
+		var i = nearestEnd(ct, videoEl.buffered);
+
+		if (i !== -1) {
 			res.start  = videoEl.buffered.start(i);
-        	res.end    = videoEl.buffered.end(  i);
-        	res.length = res.end - res.start;
-        }
+			res.end    = videoEl.buffered.end(  i);
+			res.length = res.end - res.start;
+		}
 
-        return res;
-    };
+		return res;
+	};
 
 	var onProgress = function() {
 		cc.broadcast({

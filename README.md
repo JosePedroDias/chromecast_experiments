@@ -1,3 +1,17 @@
+# chromecast experiments
+
 taking chromecast for a walk...
 
+
+
 [experiments](index.html)
+
+
+
+## TODO
+
+* kill does not work
+* support mosca overlay
+* support next video overlay
+* check if it works without ping (recover new sesssion)
+* test HLS?

@@ -103,8 +103,23 @@
 				log('server version:', msg.value);
 				break;
 
+			case 'progress':
+			case 'durationchange':
+			case 'loadedmetadata':
+			case 'volumechange':
+
+			case 'play':
+			case 'pause':
+
+			case 'waiting':
+			case 'playing':
+			case 'seeked':
+
+				log(msg.kind, msg.value);
+				break;
+
 			case 'echo':
-				console.warn(msg.value);
+				console.warn('echo', msg.value);
 				break;
 
 			default:
