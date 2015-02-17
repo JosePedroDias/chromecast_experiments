@@ -1,7 +1,7 @@
 var APPLICATION_ID = 'D452BBEF';
 var NAMESPACE = 'urn:x-cast:com.josepedrodias.xpcc.first';
 
-var APP_VERSION = '150216_v3';
+var APP_VERSION = '150216_v4';
 
 
 

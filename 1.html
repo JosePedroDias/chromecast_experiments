@@ -12,12 +12,12 @@
 	</head>
 
 	<body>
-		<input id="src" value="http://rd3.videos.sapo.pt/ZbkSD8f1e3LtndICCztq/mov/39">
-		<button onclick="sendMessage('load(\"' + src.value + '\")')">SET SRC</button>
+		<input id="src" value="http://rd3.videos.sapo.pt/8jEvZgSwZOyLhSAjnJIh/mov/1">
+		<button onclick="sendMessage('v.pause(); load(\"' + src.value + '\")')">SET SRC</button>
 		<br/>
 
 		<input id="t" value="0">
-		<button onclick="sendMessage('v.currentTime = parseFloat(' + t.value + ')')">SET TIME</button>
+		<button onclick="sendMessage('v.currentTime = ' + t.value + '')">SET TIME</button>
 		<br/>
 
 		<button onclick="sendMessage('v.play()')">PLAY</button>

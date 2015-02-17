@@ -16,6 +16,7 @@
 
 	// https://developers.google.com/cast/docs/chrome_sender
 
+
 	
 
 	window.__onGCastApiAvailable = function(loaded, errorInfo) {
@@ -46,6 +47,8 @@
 			//log('sessionListener');
 			SESSION = ev;
 			log('session id: ' + ev.sessionId);
+
+			log( JSON.stringify(ev) );
 
 			SESSION.addUpdateListener(sessionUpdateListener);  
 

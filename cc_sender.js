@@ -25,7 +25,6 @@ setupChromeCastSender = function(APPLICATION_ID, NAMESPACE) {
 		var emitError = function(arg1) {
 			api.emit('error', (typeof arg1 === 'string') ? this + arg1 : arg1);
 		};
-		emitOk = noop; emitError = noop; // TODO
 
 		window.__onGCastApiAvailable = function(loaded, errorInfo) {
 			if (!loaded) {

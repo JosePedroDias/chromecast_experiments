@@ -11,9 +11,11 @@ body {
 }
 
 #log {
-	height: 300px;
 	overflow: hidden;
 	overflow-x: auto;
+	background-color: #DDD;
+	margin-top: 10px;
+	height: calc(100% - 120px);
 }
 
 .input-line {

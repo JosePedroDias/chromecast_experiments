@@ -16,6 +16,29 @@
 
 
 
+	var ajax = function(o) {
+		var xhr = new XMLHttpRequest();
+	    if (o.creds) { xhr.withCredentials = true; }
+		xhr.open(o.verb || 'GET', o.uri, true);
+		var cbInner = function() {
+			if (xhr.readyState === 4 && xhr.status > 199 && xhr.status < 300) {
+				return o.cb(null, JSON.parse(xhr.response));
+			}
+			o.cb('error requesting ' + o.uri);
+		};
+		xhr.onload  = cbInner;
+		xhr.onerror = cbInner;
+		xhr.send(o.payload || null);
+	};
+
+	ajax({uri:'https://music.meo.pt/web-api/myip', cb:function(err, o) {
+		log(err || 'OK!');
+		log(o);
+		//o = JSON.parse(o);
+	}});
+
+
+
 	log('Starting Receiver Manager...');
 	CRM = cast.receiver.CastReceiverManager.getInstance();
 
