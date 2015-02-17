@@ -4,7 +4,7 @@ taking chromecast for a walk...
 
 
 
-[experiments](index.html)
+[list of experiments](https://ccxp.divshot.io/index.html)
 
 
 
