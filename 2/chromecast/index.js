@@ -24,7 +24,7 @@
 	cc.on('sender_connected', function(data) {
 		log('sender_connected');
 
-		cc.broadcast({kind:'hello', value:'world'});
+		cc.broadcast({kind:'echo', value:'hello dear sender!'});
 	});
 
 	cc.on('sender_disconnected', function(data) {
@@ -87,18 +87,11 @@
 		});
 	};
 
-	/*var onDurationchange = function() {
-		cc.broadcast({
-			kind:  'durationchange',
-			value: videoEl.duration
-		});
-	};*/
-
 	var onLoadedMetadata = function() {
 		cc.broadcast({
-			kind:      'loadedmetadata', 
-			imensions: [videoEl.videoWidth, videoEl.videoHeight],
-			duration:  videoEl.duration
+			kind:       'loadedmetadata', 
+			dimensions: [videoEl.videoWidth, videoEl.videoHeight],
+			duration:   videoEl.duration
 		});
 	};
 
@@ -109,7 +102,6 @@
 	};
 
 	videoEl.addEventListener('timeupdate',     onTimeupdate);
-	//videoEl.addEventListener('durationchange', onDurationchange);
 	videoEl.addEventListener('loadedmetadata', onLoadedMetadata);
 	videoEl.addEventListener('ended',          onEnded);
 
@@ -118,7 +110,6 @@
 
 	cc.on('message', function(data) {
 		var msg = JSON.parse(data.data);
-		log('message: ', msg);
 
 		switch (msg.kind) {
 			case 'load':

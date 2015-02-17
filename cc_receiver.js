@@ -44,13 +44,21 @@ setupChromeCastReceiver = function(APPLICATION_ID, NAMESPACE) {
 	};
 
 	api.send = function(senderId, data) {
+		if (typeof data !== 'string') {
+			data = JSON.stringify(data);
+		}
+
 		MB.send(senderId, data);
 	};
 
 	api.broadcast = function(data) {
+		if (typeof data !== 'string') {
+			data = JSON.stringify(data);
+		}
+
 		var i, I, sender, senders = CRM.getSenders();
 		for (i = 0, I = senders.length; i < I; ++i) {
-			MB.send(sender[i], data);
+			MB.send(senders[i], data);
 		}
 	};
 

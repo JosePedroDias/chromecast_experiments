@@ -70,8 +70,7 @@
 	});
 
 	cc.on('message', function(data) {
-		var msg = JSON.parse(data.data);
-		log('message: ', msg);
+		var msg = JSON.parse(data);
 
 		switch (msg.kind) {
 			case 'timeupdate':
@@ -88,7 +87,7 @@
 				break;
 
 			case 'echo':
-				log(msg);
+				console.warn(msg.value);
 				break;
 
 			default:

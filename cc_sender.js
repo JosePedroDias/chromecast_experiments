@@ -35,7 +35,7 @@ setupChromeCastSender = function(APPLICATION_ID, NAMESPACE) {
 				return false;
 			}
 
-			api.emit('log', 'api load ok');
+			// api.emit('log', 'api load ok');
 
 			var sessionRequest = new chrome.cast.SessionRequest(APPLICATION_ID);
 
@@ -50,16 +50,16 @@ setupChromeCastSender = function(APPLICATION_ID, NAMESPACE) {
 			};
 
 			var receiverMessage = function(namespace, message) {
-				api.emit('log', '<- ' + message);
+				// api.emit('log', '<- ' + message);
 
 				api.emit('message', message);
 			};
 
 			var sessionListener = function(ev) {
-				api.emit('log', 'sessionListener');
+				// api.emit('log', 'sessionListener');
 				SESSION = ev;
 
-				api.emit('log', 'session id: ' + ev.sessionId);
+				// api.emit('log', 'session id: ' + ev.sessionId);
 
 				SESSION.addUpdateListener(sessionUpdateListener);  
 
@@ -71,19 +71,19 @@ setupChromeCastSender = function(APPLICATION_ID, NAMESPACE) {
 			};
 
 			var requestSession = function() {
-				api.emit('log', 'requesting session...');
+				// api.emit('log', 'requesting session...');
 				chrome.cast.requestSession(sessionListener, emitError.bind('requestSession error:'));
 			};
 
 			var receiverListener = function(ev) {
 				if (ev === chrome.cast.ReceiverAvailability.AVAILABLE) {
-					api.emit('log', 'receiver available!');
+					// api.emit('log', 'receiver available!');
 
 					requestSession();
 				}
-				else {
+				/*else {
 					api.emit('log', 'receiver ' + ev);
-				}
+				}*/
 			};
 
 			var apiConfig = new chrome.cast.ApiConfig(sessionRequest, sessionListener, receiverListener);
@@ -91,7 +91,7 @@ setupChromeCastSender = function(APPLICATION_ID, NAMESPACE) {
 			api.send = function(message) {
 				if (!SESSION) {
 					QUEUED_MESSAGES.push(message);
-					api.emit('log', 'sendMessage: delaying sending for when session is available...');
+					// api.emit('log', 'sendMessage: delaying sending for when session is available...');
 					return requestSession();
 				}
 
