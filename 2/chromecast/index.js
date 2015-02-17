@@ -111,6 +111,7 @@
 
 
 	cc.on('message', function(msg) {
+		msg = JSON.parse(msg);
 		log('message: ', msg);
 
 		switch (msg.kind) {
@@ -121,7 +122,7 @@
 			case 'play':
 				onPlay();
 				break;
-				
+
 			case 'pause':
 				onPause();
 				break;

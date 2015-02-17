@@ -29,8 +29,8 @@
 	});
 
 	cc.on('error', function(data) {
-		log('error', data);
-		window.alert(data);
+		console.error('error', data);
+		// window.alert(data);
 	});
 
 	cc.on('session_updated', function(data) {
@@ -42,6 +42,7 @@
 	});
 
 	cc.on('message', function(msg) {
+		msg = JSON.parse(msg);
 		log('message: ', msg);
 
 		switch (msg.kind) {
