@@ -13,18 +13,30 @@
 		log('ready');
 	});
 
-	cc.on('error', function(data) {
-		log('error', data);
+	cc.on('error', function(err) {
+		log('error', err);
+
+		cc.broadcast({
+			kind: 'error',
+			value: err
+		});
 	});
 
 	cc.on('closing', function(data) {
 		log('closing');
+
+		cc.broadcast({
+			kind: 'closing'
+		});
 	});
 
 	cc.on('sender_connected', function(data) {
 		log('sender_connected');
 
-		cc.broadcast({kind:'echo', value:'hello dear sender!'});
+		cc.broadcast({
+			kind:  'serverversion',
+			value: APP_VERSION
+		});
 	});
 
 	cc.on('sender_disconnected', function(data) {
@@ -80,12 +92,13 @@
 
 	// triggered by video element
 
-	var onTimeupdate = function() {
+	var onError = function(ev) {
 		cc.broadcast({
-			kind:  'timeupdate',
-			value: videoEl.currentTime
+			kind:  'error', 
+			value: ev.target.error.code
 		});
 	};
+
 
 	var onLoadedMetadata = function() {
 		cc.broadcast({
@@ -95,15 +108,98 @@
 		});
 	};
 
-	var onEnded = function() {
+	var onDurationchange = function() {
 		cc.broadcast({
-			kind:'ended'
+			kind:  'durationchange', 
+			value: videoEl.duration
 		});
 	};
 
-	videoEl.addEventListener('timeupdate',     onTimeupdate);
+
+
+	var nearestEnd = function(ct, vBuffered) {
+        var a, b;
+        for (var i = vBuffered.length - 1; i >= 0; --i) {
+            a = vBuffered.start(i);
+            b = vBuffered.end(i);
+            if (ct >= a && ct <= b) {
+                return i;
+            }
+        }
+        return -1;
+    };
+
+    var calcProgress = function(videoEl) {
+    	var ct = videoEl.currentTime;
+        var d = videoEl.duration;
+        var i = nearestEnd(ct, videoEl.buffered);
+
+        var a = 0, e = 0, l = 0;
+
+        if (i !== -1) {
+			a = videoEl.buffered.start(i);
+        	e = videoEl.buffered.end(  i);
+        	l = e - a;
+        }
+
+        return {
+            start:  a,
+            end:    e,
+            length: l
+        };
+    };
+
+	var onProgress = function() {
+		cc.broadcast({
+			kind:  'progress', 
+			value: calcProgress(videoEl)
+		});
+	};
+
+
+
+	var onTimeupdate = function() {
+		cc.broadcast({
+			kind:  'timeupdate',
+			value: videoEl.currentTime
+		});
+	};
+
+	var onVolumechange = function() {
+		cc.broadcast({
+			kind:  'volumechange',
+			value: videoEl.volume
+		});
+	};
+
+
+	var onEnded   = function() { cc.broadcast({kind:'ended'}); };
+	var onPause   = function() { cc.broadcast({kind:'pause'}); };
+	var onPlay    = function() { cc.broadcast({kind:'play'}); };
+
+	var onWaiting = function() { cc.broadcast({kind:'waiting'}); };
+	var onPlaying = function() { cc.broadcast({kind:'playing'}); };
+	var onSeeked  = function() { cc.broadcast({kind:'seeked'}); };
+
+
+
+	videoEl.addEventListener('error',          onError);
+	
 	videoEl.addEventListener('loadedmetadata', onLoadedMetadata);
+	videoEl.addEventListener('durationchange', onDurationchange);
+
+	videoEl.addEventListener('progress',       onProgress);
+
+	videoEl.addEventListener('timeupdate',     onTimeupdate);
+	videoEl.addEventListener('volumechange',   onVolumechange);
+
 	videoEl.addEventListener('ended',          onEnded);
+	videoEl.addEventListener('pause',          onPause);
+	videoEl.addEventListener('play',           onPlay);
+
+	videoEl.addEventListener('waiting',        onWaiting);
+	videoEl.addEventListener('playing',        onPlaying);
+	videoEl.addEventListener('seeked',         onSeeked);
 
 
 
@@ -135,6 +231,10 @@
 				setVolume(msg.value);
 				break;
 
+			case 'kill':
+				api.end();
+				break;
+
 			default:
 				console.error(msg);
 		}
@@ -142,6 +242,6 @@
 		cc.broadcast({kind:'echo', value:msg});
 	});
 
-	cc.start();
+	cc.start(false); // trueish exists cc receiver when no more open sessions exist
 
 })();

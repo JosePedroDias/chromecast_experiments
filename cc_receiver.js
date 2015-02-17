@@ -12,7 +12,12 @@ setupChromeCastReceiver = function(APPLICATION_ID, NAMESPACE) {
 
 	var CRM, MB;
 
-	api.start = function() {
+	api.end = function() {
+		api.emit('closing');
+		window.close();
+	};
+
+	api.start = function(closeOnZeroSenders) {
 		CRM = cast.receiver.CastReceiverManager.getInstance();
 
 		CRM.onReady = function(ev) {
@@ -26,9 +31,8 @@ setupChromeCastReceiver = function(APPLICATION_ID, NAMESPACE) {
 		CRM.onSenderDisconnected = function(ev) {
 			api.emit('sender_disconnected', ev.data);
 
-			if (CRM.getSenders().length === 0) { // THIS IS OPTIONAL
-				api.emit('closing');
-				window.close();
+			if (closeOnZeroSenders && CRM.getSenders().length === 0) {
+				api.end();
 			}
 		};
 

@@ -62,6 +62,12 @@
 				value: v
 			});
 		});
+
+		document.querySelector('#kill-cc').addEventListener('click', function() {
+			cc.send({
+				kind: 'kill'
+			});
+		});
 	});
 
 	cc.on('error', function(data) {
@@ -91,6 +97,10 @@
 
 			case 'ended':
 				document.querySelector('#current-time').innerHTML = 'ENDED';
+				break;
+
+			case 'serverversion':
+				log('server version:', msg.value);
 				break;
 
 			case 'echo':
