@@ -43,16 +43,12 @@
 
 
 
-	// setTimeout(function() { // TODO ARGH
-
-		if (cc.isSupported()) {
-			log('chromecast supported!');
-			cc.start();
-		}
-		else {
-			log('chromecast not supported!');
-		}
-
-	// }, 200);
+	if (cc.isSupported()) {
+		log('chromecast supported!');
+		cc.start();
+	}
+	else {
+		log('chromecast not supported!');
+	}
 
 })();
