@@ -55,6 +55,10 @@
 			videoEl.removeAttribute('poster');
 		}
 
+		if (autoplay) {
+			videoEl.setAttribute('autoplay', '');
+		}
+
 		if (sourceEl) {
 			videoEl.removeChild(sourceEl);
 		}
@@ -62,11 +66,6 @@
 		sourceEl = document.createElement('source');
 		sourceEl.setAttribute('type', 'video/mp4');
 		sourceEl.setAttribute('src', videoURL);
-
-		if (autoplay) {
-			sourceEl.setAttribute('autoplay', '');
-		}
-
 		videoEl.appendChild(sourceEl);
 
 		videoEl.load();
@@ -132,21 +131,21 @@
     var calcProgress = function(videoEl) {
     	var ct = videoEl.currentTime;
         var d = videoEl.duration;
-        var i = nearestEnd(ct, videoEl.buffered);
+        var res = {start:0, end:0, length:0 };
 
-        var a = 0, e = 0, l = 0;
-
-        if (i !== -1) {
-			a = videoEl.buffered.start(i);
-        	e = videoEl.buffered.end(  i);
-        	l = e - a;
+        if (!isFinite(ct) || !isFinite(d)) {
+        	return res;
         }
 
-        return {
-            start:  a,
-            end:    e,
-            length: l
-        };
+        var i = nearestEnd(ct, videoEl.buffered);
+
+        if (i !== -1) {
+			res.start  = videoEl.buffered.start(i);
+        	res.end    = videoEl.buffered.end(  i);
+        	res.length = res.end - res.start;
+        }
+
+        return res;
     };
 
 	var onProgress = function() {
