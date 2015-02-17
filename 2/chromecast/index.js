@@ -33,7 +33,7 @@
 
 	// sender-triggered
 
-	var onLoad = function(videoURL, posterURL, autoplay) {
+	var load = function(videoURL, posterURL, autoplay) {
 		if (posterURL) {
 			videoEl.setAttribute('poster', posterURL);
 		}
@@ -58,12 +58,16 @@
 		videoEl.load();
 	};
 
-	var onPlay = function() {
+	var play = function() {
 		videoEl.play();
 	};
 
-	var onPause = function() {
+	var pause = function() {
 		videoEl.pause();
+	};
+
+	var setCurrentTime = function(t) {
+		videoEl.currentTime = t;
 	};
 
 	var setVolume = function(v) {
@@ -110,23 +114,33 @@
 
 
 
-	cc.on('message', function(msg) {
-		msg = JSON.parse(msg);
+	cc.on('message', function(data) {
+		var msg = JSON.parse(data.data);
 		log('message: ', msg);
 
 		switch (msg.kind) {
 			case 'load':
-				onLoad(msg.videoURL, msg.posterURL, msg.autoplay);
+				load(msg.videoURL, msg.posterURL, msg.autoplay);
 				break;
 
 			case 'play':
-				onPlay();
+				play();
 				break;
 
 			case 'pause':
-				onPause();
+				pause();
+				break;
+
+			case 'setCurrentTime':
+				setCurrentTime(msg.value);
+				break;
+
+			case 'setVolume':
+				setVolume(msg.value);
 				break;
 		}
+
+		cc.broadcast({kind:'echo', value:msg});
 	});
 
 	cc.start();

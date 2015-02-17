@@ -26,6 +26,34 @@
 				autoplay:  autoplay
 			});
 		});
+
+		document.querySelector('#play-button').addEventListener('click', function() {
+			cc.send({
+				kind: 'play'
+			});
+		});
+
+		document.querySelector('#pause-button').addEventListener('click', function() {
+			cc.send({
+				kind: 'pause'
+			});
+		});
+
+		document.querySelector('#current-time-set-button').addEventListener('click', function() {
+			var t = parseFloat( document.querySelector('#current-time-set').value );
+			cc.send({
+				kind: 'setCurrentTime',
+				value: t
+			});
+		});
+
+		document.querySelector('#volume-set-button').addEventListener('click', function() {
+			var v = parseFloat( document.querySelector('#volume-set').value );
+			cc.send({
+				kind: 'setVolume',
+				value: v
+			});
+		});
 	});
 
 	cc.on('error', function(data) {
@@ -41,8 +69,8 @@
 		log('session_removed', data);
 	});
 
-	cc.on('message', function(msg) {
-		msg = JSON.parse(msg);
+	cc.on('message', function(data) {
+		var msg = JSON.parse(data.data);
 		log('message: ', msg);
 
 		switch (msg.kind) {
@@ -58,6 +86,9 @@
 			case 'ended':
 				document.querySelector('#current-time').innerHTML = 'ENDED';
 				break;
+
+			case 'echo':
+				log(msg);
 		}
 	});
 
