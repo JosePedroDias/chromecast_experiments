@@ -18,5 +18,5 @@ taking chromecast for a walk...
 
 * show/hide waiting HUD
 * next video scripting
-* test HLS playback via media player library
+* `ONGOING` test HLS playback via media player library
 * check if it works without ping (recover new session)

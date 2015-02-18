@@ -24,18 +24,19 @@ mediaManager.onLoad = function(event) {
 	}
 
 	// trivial parser, based on file ext
-	if (event.data['media'] && event.data['media']['contentId']) {
+	if (event.data.media && event.data.media.contentId) {
 		console.log('Starting media application');
-		var url = event.data['media']['contentId'];
+		var url = event.data.media.contentId;
 
 		// Create the Host - much of your interaction with the library uses the Host and methods you provide to it.
 		window.host = new cast.player.api.Host({mediaElement:mediaElement, url:url});
 		var ext = url.substring(url.lastIndexOf('.'), url.length);
-		var initStart = event.data['media']['currentTime'] || 0;
-		var autoplay = event.data['autoplay'] || true;
-		
+		var initStart = event.data.media.currentTime || 0;
+		var autoplay = event.data.autoplay || true;
+
 		var protocol = null;
 		mediaElement.autoplay = autoplay;  // Make sure autoplay get's set
+		
 		if (url.lastIndexOf('.m3u8') >= 0) { // HLS
 			protocol = cast.player.api.CreateHlsStreamingProtocol(host);
 		}
@@ -48,7 +49,7 @@ mediaManager.onLoad = function(event) {
 
 		// How to override a method in Host. I know that it's safe to just provide this method.
 		host.onError = function(errorCode) {
-			console.log("Fatal Error - " + errorCode);
+			console.log('Fatal Error - ' + errorCode);
 			if (window.player) {
 				window.player.unload();
 				window.player = null;
@@ -60,10 +61,10 @@ mediaManager.onLoad = function(event) {
 			requestInfo.withCredentials = true;
 		};*/
 
-		console.log("we have protocol " + ext);
+		console.log('we have protocol ' + ext);
 
 		if (protocol !== null) {
-			console.log("Starting Media Player Library");
+			console.log('Starting Media Player Library');
 			window.player = new cast.player.api.Player(host);
 			window.player.load(protocol, initStart);
 		}
@@ -71,7 +72,7 @@ mediaManager.onLoad = function(event) {
 			window.defaultOnLoad(event); // do the default process
 		}
 	}
-}
+};
 
 
 window.player = null;
