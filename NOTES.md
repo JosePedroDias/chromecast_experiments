@@ -17,7 +17,7 @@
 
 ## What kinda runs
 
-* other formats via media player library https://developers.google.com/cast/docs/player
+* other formats via the [media player library](https://developers.google.com/cast/docs/player)
 
 
 ## Not tested yet:
@@ -40,3 +40,13 @@
 
 Apparently if no incoming info is received from an opened session for some seconds, the session is closed.  
 I managed to avoid this by sending echo packets periodically with a `setInterval`.
+
+
+## Debugging
+
+The chromecast exposes a page to use the web developer tools remotely
+
+Go to the chromecast's IP address, port 9222, such as `http://10.134.131.40:9222/`
+
+If you're wondering how to find your chromecast's IP address, simply add an img tag with an URL (can be 404) to the chromecast-running page.
+You'll see CC trying to fetch it from your dummy web server (such as `python -m SimpleHTTPServer`)
