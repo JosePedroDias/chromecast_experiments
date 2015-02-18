@@ -15,6 +15,11 @@
 * 1280 x 720 px
 
 
+## What kinda runs
+
+* other formats via media player library https://developers.google.com/cast/docs/player
+
+
 ## Not tested yet:
 
 * websockets
@@ -23,6 +28,7 @@
 
 ## Limitations
 
+* https://developers.google.com/cast/docs/media <---
 * media (video, audio, images) can be server elsewhere via http
 * scripts and pages must be hosted in https (I use [divshot](https://divshot.com/) to deploy my stuff).
 * AJAX requests are not possible

@@ -16,7 +16,7 @@ taking chromecast for a walk...
 
 ## TODO
 
-* support mosca overlay
-* support next video overlay
-* check if it works without ping (recover new sesssion)
-* test HLS?
+* show/hide waiting HUD
+* next video scripting
+* test HLS playback via media player library
+* check if it works without ping (recover new session)
