@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html manifest="../../cache.manifest">
 	<head>
 		<meta charset="utf-8">
 
@@ -12,6 +12,28 @@
 
 	<body>
 		<video></video>
+
+		<div id="badge">
+			<div class="title">SAPO</div>
+		</div>
+
+		<div id="next">
+			<div class="left">
+				<span class="duration">tempo</span>
+			</div>
+			<div class="right">
+				<span class="title">titulo</span>
+			</div>
+		</div>
+
+		<div id="hud">
+			<span id="ct">_</span>
+			<div id="progress">
+				<div id="cached"></div>
+				<div id="head"></div>
+			</div>
+			<span id="duration">_</span>
+		</div>
 
 		<script type="text/javascript" src="../common.js"></script>
 		<script type="text/javascript" src="../../eventEmitter.js"></script>

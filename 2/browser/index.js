@@ -100,7 +100,7 @@
 				break;
 
 			case 'serverversion':
-				log('server version:', msg.value);
+				log('server version:', msg.appversion, msg.useragent);
 				break;
 
 			case 'progress':

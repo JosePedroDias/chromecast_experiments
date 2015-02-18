@@ -5,12 +5,16 @@ html {
 body {
 	height: 100%;
 	overflow: hidden;
-	background-color: #FFF;
 	padding: 0;
 	margin: 0;
+	background-color: #000;
+	background-repeat: no-repeat;
+	background-position: 0 0;
+	background-image: url(../../assets/bg/abstract-3d-design-wallpapers-hd.jpg);
 }
 
 #log {
 	font-family: monospace;
 	font-size: 14px;
+	color: #FFF;
 }

@@ -8,9 +8,14 @@ taking chromecast for a walk...
 
 
 
+## NOTES
+
+[read them here](NOTES.md)
+
+
+
 ## TODO
 
-* kill does not work
 * support mosca overlay
 * support next video overlay
 * check if it works without ping (recover new sesssion)

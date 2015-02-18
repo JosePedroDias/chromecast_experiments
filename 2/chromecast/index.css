@@ -14,3 +14,103 @@ video {
 	width:  100%;
 	height: 100%;
 }
+
+#hud {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	background-color: rgba(0, 0, 0, 0.33);
+}
+
+#ct, #duration {
+	color: #FFF;
+	font-family: sans-serif;
+	font-size: 20px;
+	line-height: 28px;
+	display: inline-block;
+	width: 60px;
+	text-align: center;
+}
+
+#duration {
+	position: absolute;
+	right: 0;
+}
+
+#progress {
+	position: absolute;
+	top: 0;
+	left:  60px;
+	right: 60px;
+	margin-top: 4px;
+	height: 20px;
+}
+
+#cached {
+	position: absolute;
+	background-color: rgba(0, 255, 0, 0.33);
+	left:  0%;
+	width: 0%;
+	height: 100%;
+}
+
+#head {
+	position: absolute;
+	background-color: #FFF;
+	left:  0%;
+	width: 2px;
+	height: 100%;
+	margin-left: -1px;
+}
+
+#badge {
+	width:  128px;
+	height: 128px;
+	position: absolute;
+	left: 10px;
+	top:  10px;
+	background-color: rgba(0, 0, 0, 0.33);
+	background-repeat: no-repeat;
+	background-image: url(../../assets/images/sapo_badge256.png);
+	background-size: contain;
+	overflow: visible;
+}
+
+#badge.title {
+	position: absolute;
+	left: 128px;
+	top: 0;
+	line-height: 128px;
+	font-family: sans-serif;
+	font-size: 12px;
+	color: #FFF;
+}
+
+#next {
+	width:  128px;
+	height:  64px;
+	position: absolute;
+	right: 10px;
+	top:   10px;
+	color: #FFF;
+	font-family: sans-serif;
+	font-size:   10px;
+}
+
+#next > div {
+	display: inline-block;
+	width:  64px;
+	height: 64px;
+	text-align: center;
+}
+
+#next.left {
+	background-color: rgba(0, 0, 0, 0.33);
+}
+
+#next.right {
+	background-repeat: no-repeat;
+	background-image: url(../../assets/images/sapo_badge256.png);
+	background-size: cover;
+}

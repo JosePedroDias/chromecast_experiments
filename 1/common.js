@@ -1,7 +1,7 @@
 var CC_APPLICATION_ID = 'D452BBEF';
 var CC_NAMESPACE      = 'urn:x-cast:com.josepedrodias.xpcc.first';
 
-var APP_VERSION = '150217_v001';
+var APP_VERSION = '150218_v004';
 
 
 

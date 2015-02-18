@@ -34,8 +34,9 @@
 		log('sender_connected');
 
 		cc.broadcast({
-			kind:  'serverversion',
-			value: APP_VERSION
+			kind:      'serverversion',
+			appversion: APP_VERSION,
+			useragent:  navigator.userAgent
 		});
 	});
 
@@ -46,6 +47,10 @@
 
 
 	// sender-triggered
+
+	var isHLS = function(url) {
+		return (url.toLowerCase().indexOf('.m3u8') !== -1);
+	};
 
 	var load = function(videoURL, posterURL, autoplay) {
 		if (posterURL) {
@@ -63,8 +68,10 @@
 			videoEl.removeChild(sourceEl);
 		}
 
+		var mimeType = isHLS(videoURL) ? 'application/vnd.apple.mpegurl' : 'video/mp4';
+
 		sourceEl = document.createElement('source');
-		sourceEl.setAttribute('type', 'video/mp4');
+		sourceEl.setAttribute('type', mimeType);
 		sourceEl.setAttribute('src', videoURL);
 		videoEl.appendChild(sourceEl);
 
@@ -89,6 +96,27 @@
 
 
 
+	var pad00 = function(n) {
+        return (n < 10) ? '0' + n : n;
+    };
+
+    var formatTime = function(t0) {
+        var secs = Math.floor(t0 % 60);
+        var mins = Math.floor(t0 / 60);
+        var h = Math.floor(mins / 60);
+        var arr;
+        if (h > 0) {
+            mins -= h * 60;
+            arr = [h, pad00(mins), pad00(secs)];
+        }
+        else {
+            arr = [mins, pad00(secs)];
+        }
+        return arr.join(':');
+    };
+
+
+
 	// triggered by video element
 
 	var onError = function(ev) {
@@ -107,11 +135,16 @@
 		});
 	};
 
+	var dur = 100;
+
 	var onDurationchange = function() {
+		var d = videoEl.duration;
+		dur = d;
 		cc.broadcast({
 			kind:  'durationchange', 
-			value: videoEl.duration
+			value: d
 		});
+		document.querySelector('#duration').firstChild.nodeValue = formatTime(d);
 	};
 
 
@@ -148,19 +181,27 @@
 	};
 
 	var onProgress = function() {
+		var prog = calcProgress(videoEl);
 		cc.broadcast({
 			kind:  'progress', 
-			value: calcProgress(videoEl)
+			value: prog
 		});
+
+		var cacheEl = document.querySelector('#cached');
+		cacheEl.style.left  = (prog.start/ dur*100).toFixed(3) + '%';
+		cacheEl.style.width = (prog.length/dur*100).toFixed(3) + '%';
 	};
 
 
 
 	var onTimeupdate = function() {
+		var ct = videoEl.currentTime;
 		cc.broadcast({
 			kind:  'timeupdate',
-			value: videoEl.currentTime
+			value: ct
 		});
+		document.querySelector('#ct').firstChild.nodeValue = formatTime(ct);
+		document.querySelector('#head').style.left = (ct/dur*100).toFixed(3) + '%';
 	};
 
 	var onVolumechange = function() {
@@ -230,7 +271,7 @@
 				break;
 
 			case 'kill':
-				api.end();
+				cc.end();
 				break;
 
 			default:
