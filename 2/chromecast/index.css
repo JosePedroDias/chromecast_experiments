@@ -27,6 +27,7 @@ video {
 	color: #FFF;
 	font-family: sans-serif;
 	font-size: 20px;
+	text-shadow: 0 0 4px #000, 0 0 2px #000;
 	line-height: 28px;
 	display: inline-block;
 	width: 60px;
@@ -70,47 +71,59 @@ video {
 	position: absolute;
 	left: 10px;
 	top:  10px;
-	background-color: rgba(0, 0, 0, 0.33);
+	/*background-color: rgba(0, 0, 0, 0.33);*/
 	background-repeat: no-repeat;
 	background-image: url(../../assets/images/sapo_badge256.png);
 	background-size: contain;
 	overflow: visible;
 }
 
-#badge.title {
+#badge .title {
 	position: absolute;
-	left: 128px;
+	left: 138px;
 	top: 0;
 	line-height: 128px;
 	font-family: sans-serif;
-	font-size: 12px;
+	font-size: 16px;
+	font-weight: bold;
+	text-shadow: 0 0 4px #000, 0 0 2px #000;
 	color: #FFF;
+	white-space: nowrap;
 }
 
 #next {
-	width:  128px;
-	height:  64px;
+	width:  192px;
+	height:  96px;
 	position: absolute;
 	right: 10px;
 	top:   10px;
 	color: #FFF;
 	font-family: sans-serif;
-	font-size:   10px;
-}
-
-#next > div {
-	display: inline-block;
-	width:  64px;
-	height: 64px;
-	text-align: center;
-}
-
-#next.left {
+	font-size:   12px;
+	text-shadow: 0 0 4px #000, 0 0 2px #000;
 	background-color: rgba(0, 0, 0, 0.33);
 }
 
-#next.right {
+#next > div {
+	float: left;
+	width:  96px;
+	height: 96px;
+	text-align: center;
+}
+
+#next .left { /* http://philipwalton.github.io/solved-by-flexbox/demos/vertical-centering/ */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+#next .title {
+	font-weight: bold;
+}
+
+#next .right {
 	background-repeat: no-repeat;
-	background-image: url(../../assets/images/sapo_badge256.png);
-	background-size: cover;
+	background-image: url(http://thumbs.web.sapo.io/?pic=http://cache13.stormap.sapo.pt/vidstore11/thumbnais/f7/d5/7f/10360335_oJoCp.jpg&amp;crop=center&amp;tv=2&amp;W=444&amp;H=250&amp;errorpic=http://assets.web.sapo.io/sapovideo/sv/20150205/imgs/playlist_default_thumb_error_pt.gif);
+	background-position: center center;
+	background-size: contain;
 }
