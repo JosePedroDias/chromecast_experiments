@@ -75,6 +75,7 @@ video {
 	background-repeat: no-repeat;
 	/*background-image: url(../../assets/images/sapo_badge256.png);*/
 	background-size: contain;
+	background-position: center center;
 	overflow: visible;
 }
 
