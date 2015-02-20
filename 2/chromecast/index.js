@@ -5,7 +5,7 @@
 
 	log('APP VERSION', APP_VERSION);
 
-	var sourceEl, videoEl = document.querySelector('video');
+	var sourceEl, videoEl = qs('video');
 
 	var cc = window.setupChromeCastReceiver(CC_APPLICATION_ID, CC_NAMESPACE);
 
@@ -144,7 +144,7 @@
 			kind:  'durationchange', 
 			value: d
 		});
-		document.querySelector('#duration').firstChild.nodeValue = formatTime(d);
+		setText(qs('#duration'), formatTime(d));
 	};
 
 
@@ -187,7 +187,7 @@
 			value: prog
 		});
 
-		var cacheEl = document.querySelector('#cached');
+		var cacheEl = qs('#cached');
 		cacheEl.style.left  = (prog.start/ dur*100).toFixed(3) + '%';
 		cacheEl.style.width = (prog.length/dur*100).toFixed(3) + '%';
 	};
@@ -200,8 +200,8 @@
 			kind:  'timeupdate',
 			value: ct
 		});
-		document.querySelector('#ct').firstChild.nodeValue = formatTime(ct);
-		document.querySelector('#head').style.left = (ct/dur*100).toFixed(3) + '%';
+		setText(qs('#ct'), formatTime(ct));
+		qs('#head').style.left = (ct/dur*100).toFixed(3) + '%';
 	};
 
 	var onVolumechange = function() {
@@ -242,6 +242,42 @@
 
 
 
+	var showNext = function(title, poster, duration) {
+		var nextEl = qs('#next');
+
+		var titleEl = qs('.title', nextEl);
+		setText(titleEl, title || '');
+
+		var rightEl = qs('.right', nextEl);
+		rightEl.style.backgroundImage = poster ? ['url(', poster, ')'].join('') : 'none';
+
+		var durationEl = qs('.duration', nextEl);
+		setText(durationEl, duration || '');
+
+		nextEl.classList.remove('hidden');
+	};
+
+	var hideNext = function() {
+		var nextEl = qs('#next');
+		nextEl.classList.add('hidden');
+	};
+
+	var setBadge = function(title, image) {
+		var badgeEl = qs('#badge');
+		var hide = (!title && !image);
+		if (hide) {
+			badgeEl.classList.add('hidden');
+		}
+		else {
+			var titleEl = qs('.title', badgeEl);
+			setText(titleEl, title || '');
+
+			badgeEl.style.backgroundImage = image ? ['url(', image, ')'].join('') : 'none';
+
+			badgeEl.classList.remove('hidden');
+		}
+	};
+
 
 	cc.on('message', function(data) {
 		var msg = JSON.parse(data.data);
@@ -268,6 +304,18 @@
 
 			case 'setVolume':
 				setVolume(msg.value);
+				break;
+
+			case 'setBadge':
+				setBadge(msg.title, msg.image);
+				break;
+
+			case 'showNext':
+				showNext(msg.title, msg.poster, msg.duration);
+				break;
+
+			case 'hideNext':
+				hideNext();
 				break;
 
 			case 'kill':

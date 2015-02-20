@@ -73,7 +73,7 @@ video {
 	top:  10px;
 	/*background-color: rgba(0, 0, 0, 0.33);*/
 	background-repeat: no-repeat;
-	background-image: url(../../assets/images/sapo_badge256.png);
+	/*background-image: url(../../assets/images/sapo_badge256.png);*/
 	background-size: contain;
 	overflow: visible;
 }
@@ -113,6 +113,7 @@ video {
 
 #next .left { /* http://philipwalton.github.io/solved-by-flexbox/demos/vertical-centering/ */
 	display: flex;
+	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 }
@@ -123,7 +124,11 @@ video {
 
 #next .right {
 	background-repeat: no-repeat;
-	background-image: url(http://thumbs.web.sapo.io/?pic=http://cache13.stormap.sapo.pt/vidstore11/thumbnais/f7/d5/7f/10360335_oJoCp.jpg&amp;crop=center&amp;tv=2&amp;W=444&amp;H=250&amp;errorpic=http://assets.web.sapo.io/sapovideo/sv/20150205/imgs/playlist_default_thumb_error_pt.gif);
+	/*background-image: url(http://thumbs.web.sapo.io/?pic=http://cache13.stormap.sapo.pt/vidstore11/thumbnais/f7/d5/7f/10360335_oJoCp.jpg&amp;crop=center&amp;tv=2&amp;W=444&amp;H=250&amp;errorpic=http://assets.web.sapo.io/sapovideo/sv/20150205/imgs/playlist_default_thumb_error_pt.gif);*/
 	background-position: center center;
 	background-size: contain;
+}
+
+.hidden {
+	display: none !important;
 }

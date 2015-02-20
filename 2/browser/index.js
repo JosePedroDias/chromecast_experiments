@@ -22,10 +22,10 @@
 			});
 		}, 1000);
 
-		document.querySelector('#load-button').addEventListener('click', function() {
-			var videoURL = document.querySelector('#video-url').value;
-			var posterURL = document.querySelector('#poster-url').value;
-			var autoplay = document.querySelector('#autoplay').checked;
+		qs('#load-button').addEventListener('click', function() {
+			var videoURL = qs('#video-url').value;
+			var posterURL = qs('#poster-url').value;
+			var autoplay = qs('#autoplay').checked;
 
 			cc.send({
 				kind:      'load',
@@ -35,35 +35,63 @@
 			});
 		});
 
-		document.querySelector('#play-button').addEventListener('click', function() {
+		qs('#play-button').addEventListener('click', function() {
 			cc.send({
 				kind: 'play'
 			});
 		});
 
-		document.querySelector('#pause-button').addEventListener('click', function() {
+		qs('#pause-button').addEventListener('click', function() {
 			cc.send({
 				kind: 'pause'
 			});
 		});
 
-		document.querySelector('#current-time-set-button').addEventListener('click', function() {
-			var t = parseFloat( document.querySelector('#current-time-set').value );
+		qs('#current-time-set-button').addEventListener('click', function() {
+			var t = parseFloat( qs('#current-time-set').value );
 			cc.send({
 				kind: 'setCurrentTime',
 				value: t
 			});
 		});
 
-		document.querySelector('#volume-set-button').addEventListener('click', function() {
-			var v = parseFloat( document.querySelector('#volume-set').value );
+		qs('#volume-set-button').addEventListener('click', function() {
+			var v = parseFloat( qs('#volume-set').value );
 			cc.send({
 				kind: 'setVolume',
 				value: v
 			});
 		});
 
-		document.querySelector('#kill-cc').addEventListener('click', function() {
+		qs('#set-badge').addEventListener('click', function() {
+			var bTitle = qs('#badge-title').value;
+			var bImage = qs('#badge-image').value;
+			cc.send({
+				kind:  'setBadge',
+				title: bTitle,
+				image: bImage
+			});
+		});
+
+		qs('#load-next').addEventListener('click', function() {
+			var nTitle    = qs('#next-title').value;
+			var nPoster   = qs('#next-poster').value;
+			var nDuration = qs('#next-duration').value;
+			cc.send({
+				kind:    'showNext',
+				title:    nTitle,
+				poster:   nPoster,
+				duration: nDuration
+			});
+		});
+
+		qs('#unload-next').addEventListener('click', function() {
+			cc.send({
+				kind: 'hideNext'
+			});
+		});
+
+		qs('#kill-cc').addEventListener('click', function() {
 			cc.send({
 				kind: 'kill'
 			});
@@ -87,16 +115,16 @@
 
 		switch (msg.kind) {
 			case 'timeupdate':
-				document.querySelector('#current-time').innerHTML = msg.value.toFixed(2);
+				setText(qs('#current-time'), msg.value.toFixed(2));
 				break;
 
 			case 'loadedmetadata':
-				document.querySelector('#duration'  ).innerHTML = msg.duration.toFixed(2);
-				document.querySelector('#dimensions').innerHTML = msg.dimensions.join(' x ');
+				setText(qs('#duration'),   msg.duration.toFixed(2));
+				setText(qs('#dimensions'), msg.dimensions.join(' x '));
 				break;
 
 			case 'ended':
-				document.querySelector('#current-time').innerHTML = 'ENDED';
+				setText(qs('#current-time'), 'ENDED');
 				break;
 
 			case 'serverversion':
@@ -114,12 +142,11 @@
 			case 'waiting':
 			case 'playing':
 			case 'seeked':
-
 				log(msg.kind, msg.value);
 				break;
 
 			case 'echo':
-				console.warn('echo', msg.value);
+				console.warn('echo', JSON.stringify(msg.value) );
 				break;
 
 			default:
